@@ -4,8 +4,8 @@
 #include "freertos/task.h"
 
 #define I2C_MASTER_NUM              I2C_NUM_0
-#define I2C_MASTER_SCL_IO           22
-#define I2C_MASTER_SDA_IO           21
+#define I2C_MASTER_SCL_IO           22 // Cambiar según pinout del ESP32-S3 = 10
+#define I2C_MASTER_SDA_IO           21 // Cambiar según pinout del ESP32-S3 = 11
 #define I2C_MASTER_FREQ_HZ          50000
 #define I2C_MASTER_TX_BUF_DISABLE   0
 #define I2C_MASTER_RX_BUF_DISABLE   0
@@ -24,11 +24,12 @@ void i2c_master_init() {
         .sda_pullup_en = GPIO_PULLUP_ENABLE,
         .scl_pullup_en = GPIO_PULLUP_ENABLE,
         .master.clk_speed = I2C_MASTER_FREQ_HZ,
+        .clk_flags = 0,   // Recomendado en ESP32-S3
     };
-    i2c_param_config(I2C_MASTER_NUM, &conf);
-    i2c_driver_install(I2C_MASTER_NUM, conf.mode,
+    ESP_ERROR_CHECK(i2c_param_config(I2C_MASTER_NUM, &conf));
+    ESP_ERROR_CHECK(i2c_driver_install(I2C_MASTER_NUM, conf.mode,
                        I2C_MASTER_RX_BUF_DISABLE,
-                       I2C_MASTER_TX_BUF_DISABLE, 0);
+                       I2C_MASTER_TX_BUF_DISABLE, 0));
 }
 
 void lcd_write_nibble(uint8_t nibble, uint8_t rs) {
