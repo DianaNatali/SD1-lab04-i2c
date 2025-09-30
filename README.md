@@ -1,4 +1,4 @@
-# Lab04: Lectura de ADC y Visualización en LCD I2C con STM32 Blue Pill y ESP32
+# Lab03: Lectura de ADC y visualización en LCD por I2C con STM32 Blue Pill y ESP32
 
 ## Integrantes
 
